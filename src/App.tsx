@@ -36,10 +36,9 @@ export const App: React.FC = () => {
   const [error, setError] = useState<ErrorMessages | null>(null);
   const [filterBy, setFilterBy] = useState<FilterType>(FilterType.all);
   const [todosCounter, setTodosCounter] = useState(0);
-  const [todo, setTodo] = useState('');
+  const [toBeDone, setToBeDone] = useState('');
   const [loading, setLoading] = useState(false);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
-  // const [completedTodos, setCompletedTodos] = useState<Todo[] | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -70,7 +69,7 @@ export const App: React.FC = () => {
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!todo.trim()) {
+    if (!toBeDone.trim()) {
       setError(ErrorMessages.emptyTitle);
 
       window.setTimeout(() => {
@@ -83,7 +82,7 @@ export const App: React.FC = () => {
     const newTempTodo: Todo = {
       id: 0,
       userId: USER_ID,
-      title: todo.trim(),
+      title: toBeDone.trim(),
       completed: false,
     };
 
@@ -96,7 +95,7 @@ export const App: React.FC = () => {
       .then(addedTodo => {
         setTodos(currentTodos => [...currentTodos, addedTodo]);
         setTempTodo(null);
-        setTodo('');
+        setToBeDone('');
 
         window.setTimeout(() => {
           inputRef.current?.focus();
@@ -117,7 +116,7 @@ export const App: React.FC = () => {
       }).finally(() => {
         setLoading(false);
       });
-  }, [todo, setTodos, setError]);
+  }, [toBeDone, setTodos, setError]);
 
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent<HTMLFormElement>) => {
@@ -225,8 +224,8 @@ export const App: React.FC = () => {
               className="todoapp__new-todo"
               placeholder="What needs to be done?"
               ref={inputRef}
-              value={todo}
-              onChange={(e) => setTodo(e.target.value)}
+              value={toBeDone}
+              onChange={(e) => setToBeDone(e.target.value)}
               disabled={loading}
             />
           </form>
