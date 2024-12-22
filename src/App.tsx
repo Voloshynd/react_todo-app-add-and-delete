@@ -84,7 +84,7 @@ export const App: React.FC = () => {
       id: 0,
       userId: USER_ID,
       title: todo.trim(),
-      completed: true,
+      completed: false,
     };
 
 
