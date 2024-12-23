@@ -13,47 +13,31 @@ type Props = {
 };
 
 const Footer: React.FC<Props> = React.memo(
-  ({ filterBy, todosCounter, handleSetFilter, todos, handleDeleteCompletedTodos}) => {
+  ({ filterBy, todosCounter, handleSetFilter, todos, handleDeleteCompletedTodos }) => {
+
+    const itemsLeftText = `${todosCounter} ${todosCounter === 1 ? 'item left' : 'items left'}`;
 
     return (
       <footer className="todoapp__footer" data-cy="Footer">
         <span className="todo-count" data-cy="TodosCounter">
-          {todosCounter} {todosCounter === 1 ? 'item left' : 'items left'}
+          {itemsLeftText}
         </span>
         {/* Active link should have the 'selected' class */}
         <nav className="filter" data-cy="Filter">
-          <a
-            href="#/"
-            className={cn("filter__link", {
-              "selected": filterBy === FilterType.all,
-            })}
-            data-cy="FilterLinkAll"
-            onClick={() => handleSetFilter(FilterType.all)}
-          >
-            All
-          </a>
 
-          <a
-            href="#/active"
-            className={cn("filter__link", {
-              "selected": filterBy === FilterType.active,
-            })}
-            data-cy="FilterLinkActive"
-            onClick={() => handleSetFilter(FilterType.active)}
-          >
-            Active
-          </a>
-
-          <a
-            href="#/completed"
-            className={cn("filter__link", {
-              "selected": filterBy === FilterType.completed,
-            })}
-            data-cy="FilterLinkCompleted"
-            onClick={() => handleSetFilter(FilterType.completed)}
-          >
-            Completed
-          </a>
+          {Object.values(FilterType).map((filterOption) => (
+            <a
+              href={`#/${filterOption}`}
+              key={filterOption}
+              className={cn("filter__link", {
+                "selected": filterBy === filterOption,
+              })}
+              data-cy={`FilterLink${filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}`}
+              onClick={() => handleSetFilter(filterOption)}
+            >
+              {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}
+            </a>
+          ))}
         </nav>
         {/* this button should be disabled if there are no completed todos */}
         <button

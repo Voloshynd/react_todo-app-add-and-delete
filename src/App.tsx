@@ -50,8 +50,8 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     todosServices
-      .getTodos()
-      .then(data => setTodos(data))
+      .getTodos().then(setTodos)
+      // .then(data => setTodos(data))
       .catch(() => {
         setError(ErrorMessages.loadTodos);
 

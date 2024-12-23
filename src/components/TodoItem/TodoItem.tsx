@@ -10,24 +10,25 @@ type Props = {
 
 const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading = false }) => {
 
+  const {id, title, completed} = todo;
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   return (
-    <div data-cy="Todo" className={cn("todo", { "completed": todo.completed })}>
-      <label className="todo__status-label" htmlFor={`todo-${todo.id}`}>
+    <div data-cy="Todo" className={cn("todo", { "completed": completed })}>
+      <label className="todo__status-label" htmlFor={`todo-${id}`}>
         <input
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          checked={todo.completed}
-          id={`todo-${todo.id}`}
+          checked={completed}
+          id={`todo-${id}`}
           readOnly
           disabled={loading}
         />
       </label>
 
       <span data-cy="TodoTitle" className="todo__title">
-        {todo.title}
+        {title}
       </span>
 
       {/* Remove button appears only on hover */}
@@ -37,8 +38,8 @@ const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading 
         data-cy="TodoDelete"
         onClick={
           () =>{
-            handleDeleteTodo(todo.id);
-            setDeleteId(todo.id);
+            handleDeleteTodo(id);
+            setDeleteId(id);
           }}
         disabled={loading}
       >
@@ -48,7 +49,7 @@ const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading 
       {/* overlay will cover the todo while it is being deleted or updated */}
       <div data-cy="TodoLoader"
         className={cn("modal overlay", {
-          "is-active": todo.id === 0 && loading || deleteId !== null && loading,
+          "is-active": id === 0 && loading || deleteId !== null && loading,
         })}
       >
         <div className="modal-background has-background-white-ter" />
