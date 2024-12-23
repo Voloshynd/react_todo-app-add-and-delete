@@ -10,17 +10,18 @@ type Props = {
 
 const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading = false }) => {
 
-  const {id, title, completed} = todo;
+  const { id, title, completed } = todo;
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   return (
     <div data-cy="Todo" className={cn("todo", { "completed": completed })}>
       <label className="todo__status-label" htmlFor={`todo-${id}`}>
+        {" "}
         <input
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          defaultChecked={completed}
+          checked={completed}
           id={`todo-${id}`}
           aria-readonly={true}
           disabled={loading}
@@ -37,7 +38,7 @@ const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading 
         className="todo__remove"
         data-cy="TodoDelete"
         onClick={
-          () =>{
+          () => {
             handleDeleteTodo(id);
             setDeleteId(id);
           }}
