@@ -20,9 +20,9 @@ const TodoItem: React.FC<Props> = React.memo(({ todo, handleDeleteTodo, loading 
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          checked={completed}
+          defaultChecked={completed}
           id={`todo-${id}`}
-          readOnly
+          aria-readonly={true}
           disabled={loading}
         />
       </label>
